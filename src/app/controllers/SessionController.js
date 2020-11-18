@@ -3,7 +3,8 @@ import * as Yup from 'yup';
 
 import authConfig from '../../config/auth';
 
-import User from '../models/User';
+import Client from '../models/Client';
+import Administrator from '../models/Admin';
 
 class SessionController {
     async store(req, res) {
@@ -18,17 +19,24 @@ class SessionController {
 
         const { email, password } = req.body;
 
-        const user = await User.findOne({ where: { email } });
+        const client = await Client.findOne({ where: { email } });
 
-        if (!user) {
+        const administrator = await Administrator.findOne({ where: { email } });
+
+        if (!client && !administrator) {
             return res.status(401).json({ error: 'User not found' });
         }
 
-        if (!(await user.checkPassword(password))) {
+        if (
+            !((await client) ? client : administrator.checkPassword(password))
+        ) {
             return res.status(401).json({ error: 'Password does not match' });
         }
 
-        const { id, name } = user;
+        const { id, name } = client || administrator;
+
+        // add to the token payload if the user is an administrator
+        const admin = !!administrator;
 
         return res.json({
             user: {
@@ -36,7 +44,7 @@ class SessionController {
                 name,
                 email,
             },
-            token: jwt.sign({ id }, authConfig.secret, {
+            token: jwt.sign({ id, admin }, authConfig.secret, {
                 expiresIn: authConfig.expiresIn,
             }),
         });

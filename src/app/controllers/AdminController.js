@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import User from '../models/User';
+import Admin from '../models/Admin';
 
-class UserController {
+class AdminController {
     async store(req, res) {
         const schema = Yup.object().shape({
             name: Yup.string().required(),
@@ -13,7 +13,7 @@ class UserController {
             return res.status(400).json({ error: 'Validation fails' });
         }
 
-        const userExists = await User.findOne({
+        const userExists = await Admin.findOne({
             where: { email: req.body.email },
         });
 
@@ -21,13 +21,12 @@ class UserController {
             return res.status(400).json({ error: 'User already exists.' });
         }
 
-        const { id, name, email, provider } = await User.create(req.body);
+        const { id, name, email } = await Admin.create(req.body);
 
         return res.json({
             id,
             name,
             email,
-            provider,
         });
     }
 
@@ -52,10 +51,10 @@ class UserController {
 
         const { email, oldPassword } = req.body;
 
-        const user = await User.findByPk(req.userId);
+        const user = await Admin.findByPk(req.userId);
 
         if (email !== user.email) {
-            const userExists = await User.findOne({
+            const userExists = await Admin.findOne({
                 where: { email },
             });
 
@@ -68,10 +67,10 @@ class UserController {
             return res.status(401).json({ error: 'Password does not match' });
         }
 
-        const { id, name, provider } = await user.update(req.body);
+        const { id, name } = await user.update(req.body);
 
-        return res.json({ id, name, email, provider });
+        return res.json({ id, name, email });
     }
 }
 
-export default new UserController();
+export default new AdminController();
