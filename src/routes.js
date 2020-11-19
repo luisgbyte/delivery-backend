@@ -1,14 +1,20 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerconfig from './config/multer';
 
 import SessionController from './app/controllers/SessionController';
 import AdminController from './app/controllers/AdminController';
 import ClientController from './app/controllers/ClientController';
 import AddressController from './app/controllers/AddressController';
 import CategoryController from './app/controllers/CategoryController';
+import FileController from './app/controllers/FileController';
+import ProductController from './app/controllers/ProductController';
 
 import authMiddleware from './app/middlewares/auth';
+import adminMiddleware from './app/middlewares/admin';
 
 const routes = new Router();
+const upload = multer(multerconfig);
 
 routes.post('/clients', ClientController.store);
 routes.post('/sessions', SessionController.store);
@@ -17,16 +23,25 @@ routes.use(authMiddleware);
 routes.get('/clients', ClientController.index);
 routes.put('/clients', ClientController.update);
 
-routes.post('/admins', AdminController.store);
-routes.put('/admins', AdminController.update);
-
 routes.get('/addresses', AddressController.index);
 routes.post('/addresses', AddressController.store);
 routes.put('/addresses', AddressController.update);
 
+routes.use(adminMiddleware);
+routes.post('/admins', AdminController.store);
+routes.put('/admins', AdminController.update);
+
+routes.post('/files', upload.single('file'), FileController.store);
+routes.put('/files/:id', upload.single('file'), FileController.update);
+
 routes.get('/categories', CategoryController.index);
 routes.post('/categories', CategoryController.store);
-routes.put('/categories', CategoryController.update);
+routes.put('/categories/:id', CategoryController.update);
 routes.delete('/categories/:id', CategoryController.delete);
+
+routes.get('/products', ProductController.index);
+routes.post('/products', ProductController.store);
+routes.put('/products/:id', ProductController.update);
+routes.delete('/products/:id', ProductController.delete);
 
 export default routes;

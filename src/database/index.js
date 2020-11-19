@@ -4,10 +4,12 @@ import Admin from '../app/models/Admin';
 import Client from '../app/models/Client';
 import Address from '../app/models/Address';
 import Category from '../app/models/Category';
+import File from '../app/models/File';
+import Product from '../app/models/Product';
 
 import databaseConfig from '../config/database';
 
-const models = [Admin, Client, Address, Category];
+const models = [Admin, Client, Address, Category, File, Product];
 
 class Database {
     constructor() {

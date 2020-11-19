@@ -46,7 +46,8 @@ class CategoryController {
             return res.status(400).json({ error: 'Validation fails' });
         }
 
-        const { id, name } = req.body;
+        const { name } = req.body;
+        const { id } = req.params;
 
         // checking if the category exists
         const category = await Category.findByPk(id);
@@ -75,13 +76,6 @@ class CategoryController {
         // checking if the category exists
         if (!category) {
             return res.status(401).json({ error: 'Category not found' });
-        }
-
-        // checking if the user is an administrator
-        if (!req.userAdmin) {
-            return res.status(401).json({
-                error: 'You are not allowed to perform this action',
-            });
         }
 
         await category.destroy();
