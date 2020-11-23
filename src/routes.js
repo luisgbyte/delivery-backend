@@ -9,6 +9,9 @@ import AddressController from './app/controllers/AddressController';
 import CategoryController from './app/controllers/CategoryController';
 import FileController from './app/controllers/FileController';
 import ProductController from './app/controllers/ProductController';
+import OrderController from './app/controllers/OrderController';
+import PaymentController from './app/controllers/PaymentController';
+import TrackerOrderController from './app/controllers/TrackerOrderController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -22,6 +25,14 @@ routes.post('/sessions', SessionController.store);
 routes.use(authMiddleware);
 routes.get('/clients', ClientController.index);
 routes.put('/clients', ClientController.update);
+
+routes.get('/tracker', TrackerOrderController.index);
+
+routes.post('/payments', PaymentController.store);
+
+routes.get('/orders', OrderController.index);
+routes.post('/orders', OrderController.store);
+routes.delete('/orders/:id', OrderController.delete);
 
 routes.get('/addresses', AddressController.index);
 routes.post('/addresses', AddressController.store);

@@ -6,10 +6,14 @@ import File from '../models/File';
 
 class ProductController {
     async index(req, res) {
+        const { page = 1 } = req.query;
+
         const product = await Product.findAll({
             where: { stock: true },
             attributes: ['id', 'name', 'price', 'description', 'stock'],
             order: ['name'],
+            limit: 10,
+            offset: (page - 1) * 20,
             include: [
                 {
                     model: Category,

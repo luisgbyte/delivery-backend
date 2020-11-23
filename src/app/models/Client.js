@@ -32,7 +32,7 @@ class Client extends Model {
     static associate(models) {
         this.hasOne(models.Address, {
             foreignKey: 'client_id',
-            as: 'address',
+            as: 'client',
         });
     }
 }
