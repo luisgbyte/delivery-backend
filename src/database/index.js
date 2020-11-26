@@ -8,6 +8,7 @@ import File from '../app/models/File';
 import Product from '../app/models/Product';
 import Order from '../app/models/Order';
 import Payment from '../app/models/Payment';
+import ProductOrder from '../app/models/ProductOrder';
 
 import databaseConfig from '../config/database';
 
@@ -20,6 +21,7 @@ const models = [
     Product,
     Order,
     Payment,
+    ProductOrder,
 ];
 
 class Database {

@@ -12,6 +12,8 @@ import ProductController from './app/controllers/ProductController';
 import OrderController from './app/controllers/OrderController';
 import PaymentController from './app/controllers/PaymentController';
 import TrackerOrderController from './app/controllers/TrackerOrderController';
+import ProductStockController from './app/controllers/ProductStockController';
+import OrderStatusController from './app/controllers/OrderStatusController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -54,5 +56,9 @@ routes.get('/products', ProductController.index);
 routes.post('/products', ProductController.store);
 routes.put('/products/:id', ProductController.update);
 routes.delete('/products/:id', ProductController.delete);
+
+routes.put('/products/:id/stock', ProductStockController.update);
+
+routes.put('/orders/:id/status', OrderStatusController.update);
 
 export default routes;

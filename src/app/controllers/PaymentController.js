@@ -5,11 +5,11 @@ import Payment from '../models/Payment';
 class PaymentController {
     async store(req, res) {
         const schema = Yup.object().shape({
-            type: Yup.string().required(),
+            type: Yup.mixed().oneOf(['Cartão', 'Dinheiro']).required(),
             chance: Yup.number().positive().integer(),
-            card_type: Yup.string(),
-            card_banner: Yup.string()
-                .min(6)
+            card_type: Yup.mixed().oneOf(['Débito', 'Credito']),
+            card_banner: Yup.mixed()
+                .oneOf(['Visa', 'MasterCard'])
                 .when('card_type', (card_type, field) =>
                     card_type ? field.required() : field
                 ),

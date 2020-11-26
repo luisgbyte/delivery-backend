@@ -7,7 +7,7 @@ class Product extends Model {
                 name: Sequelize.STRING,
                 price: Sequelize.DOUBLE,
                 description: Sequelize.STRING,
-                stock: Sequelize.BOOLEAN,
+                stocked: Sequelize.BOOLEAN,
             },
             {
                 sequelize,
@@ -29,9 +29,10 @@ class Product extends Model {
         });
 
         this.belongsToMany(models.Order, {
-            through: 'orders_details',
-            as: 'order',
+            through: 'ProductOrders',
+            as: 'orders',
             foreignKey: 'product_id',
+            otherKey: 'order_id',
         });
     }
 }

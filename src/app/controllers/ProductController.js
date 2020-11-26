@@ -9,8 +9,8 @@ class ProductController {
         const { page = 1 } = req.query;
 
         const product = await Product.findAll({
-            where: { stock: true },
-            attributes: ['id', 'name', 'price', 'description', 'stock'],
+            where: { stocked: true },
+            attributes: ['id', 'name', 'price', 'description', 'stocked'],
             order: ['name'],
             limit: 10,
             offset: (page - 1) * 20,
@@ -36,7 +36,7 @@ class ProductController {
             name: Yup.string().required().max(20),
             price: Yup.number().required().positive().integer(),
             description: Yup.string().required().max(20),
-            stock: Yup.boolean(),
+            stocked: Yup.boolean(),
             category_id: Yup.number().required().positive().integer(),
         });
 
@@ -62,7 +62,7 @@ class ProductController {
             return res.status(401).json({ error: 'Product already exists' });
         }
 
-        const { id, price, description, stock } = await Product.create(
+        const { id, price, description, stocked } = await Product.create(
             req.body
         );
 
@@ -71,7 +71,7 @@ class ProductController {
             name,
             price,
             description,
-            stock,
+            stocked,
         });
     }
 
@@ -80,7 +80,7 @@ class ProductController {
             name: Yup.string().required().max(20),
             price: Yup.number().required().positive().integer(),
             description: Yup.string().required().max(20),
-            stock: Yup.boolean(),
+            stocked: Yup.boolean(),
             category_id: Yup.number().required().positive().integer(),
         });
 
@@ -106,11 +106,11 @@ class ProductController {
         }
 
         // update product
-        const { id, name, price, description, stock } = await product.update(
+        const { id, name, price, description, stocked } = await product.update(
             req.body
         );
 
-        return res.json({ id, name, price, description, stock });
+        return res.json({ id, name, price, description, stocked });
     }
 
     async delete(req, res) {

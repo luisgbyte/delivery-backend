@@ -31,9 +31,10 @@ class Order extends Model {
         });
 
         this.belongsToMany(models.Product, {
-            through: 'orders_details',
-            as: 'product',
+            through: 'ProductOrders',
+            as: 'products',
             foreignKey: 'order_id',
+            otherKey: 'product_id',
         });
 
         this.belongsTo(models.Payment, {

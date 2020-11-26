@@ -19,7 +19,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            stock: {
+            stocked: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: true,
                 allowNull: false,
