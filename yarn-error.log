@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add dotenv
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add date-fns
 
 PATH: 
   /home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/home/luis/.pyenv/shims:/home/luis/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/Android/Sdk/emulator:/home/luis/Android/Sdk/tools:/home/luis/Android/Sdk/tools/bin:/home/luis/Android/Sdk/platform-tools:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin:/home/luis/chomper/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: connect EACCES 104.16.17.35:443 - Local (0.0.0.0:0)
+  Error: connect EACCES 104.16.27.35:443 - Local (0.0.0.0:0)
       at internalConnect (net.js:921:16)
       at defaultTriggerAsyncIdScope (internal/async_hooks.js:429:12)
       at emitLookup (net.js:1064:9)
