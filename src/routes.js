@@ -10,8 +10,7 @@ import CategoryController from './app/controllers/CategoryController';
 import FileController from './app/controllers/FileController';
 import ProductController from './app/controllers/ProductController';
 import OrderController from './app/controllers/OrderController';
-import PaymentController from './app/controllers/PaymentController';
-import TrackerOrderController from './app/controllers/TrackerOrderController';
+import OrderTrackerController from './app/controllers/OrderTrackerController';
 import ProductStockController from './app/controllers/ProductStockController';
 import OrderStatusController from './app/controllers/OrderStatusController';
 
@@ -28,9 +27,7 @@ routes.use(authMiddleware);
 routes.get('/clients', ClientController.index);
 routes.put('/clients', ClientController.update);
 
-routes.get('/tracker', TrackerOrderController.index);
-
-routes.post('/payments', PaymentController.store);
+routes.get('/products', ProductController.index);
 
 routes.get('/orders', OrderController.index);
 routes.post('/orders', OrderController.store);
@@ -47,12 +44,13 @@ routes.put('/admins', AdminController.update);
 routes.post('/files', upload.single('file'), FileController.store);
 routes.put('/files/:id', upload.single('file'), FileController.update);
 
+routes.get('/tracker', OrderTrackerController.index);
+
 routes.get('/categories', CategoryController.index);
 routes.post('/categories', CategoryController.store);
 routes.put('/categories/:id', CategoryController.update);
 routes.delete('/categories/:id', CategoryController.delete);
 
-routes.get('/products', ProductController.index);
 routes.post('/products', ProductController.store);
 routes.put('/products/:id', ProductController.update);
 routes.delete('/products/:id', ProductController.delete);

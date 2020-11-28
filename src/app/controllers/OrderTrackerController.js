@@ -2,16 +2,16 @@
 import Order from '../models/Order';
 import Product from '../models/Product';
 import Payment from '../models/Payment';
+import Client from '../models/Client';
 
 const { Op } = require('sequelize');
 
-class TrackerOrderController {
+class OrderTrackerController {
     async index(req, res) {
         const { page = 1 } = req.query;
 
         const order = await Order.findAll({
             where: {
-                client_id: req.userId,
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
             attributes: ['id', 'total', 'date', 'status'],
@@ -19,6 +19,11 @@ class TrackerOrderController {
             limit: 10,
             offset: (page - 1) * 20,
             include: [
+                {
+                    model: Client,
+                    as: 'client',
+                    attributes: ['id', 'name'],
+                },
                 {
                     model: Product,
                     as: 'product',
@@ -37,4 +42,4 @@ class TrackerOrderController {
     }
 }
 
-export default new TrackerOrderController();
+export default new OrderTrackerController();

@@ -19,9 +19,11 @@ class OrderStatusController {
             return res.status(401).json({ error: 'Order does not exist' });
         }
 
-        const { id, total, date, client_id, status } = await order.update(
-            req.body
-        );
+        const { status } = req.body;
+
+        const { id, total, date, client_id } = await order.update({
+            status,
+        });
 
         return res.json({
             id,

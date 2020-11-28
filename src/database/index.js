@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+// import mongoose from 'mongoose';
 
 import Admin from '../app/models/Admin';
 import Client from '../app/models/Client';
@@ -27,6 +28,7 @@ const models = [
 class Database {
     constructor() {
         this.init();
+        // this.mongo();
     }
 
     init() {
@@ -39,6 +41,13 @@ class Database {
                     model.associate && model.associate(this.connection.models)
             );
     }
+
+    // mongo() {
+    //     this.mongoConnection = mongoose.connect(
+    //         'mongodb://localhost:27017/delivery',
+    //         { useNewUrlParser: true, useFindAndModify: true }
+    //     );
+    // }
 }
 
 export default new Database();

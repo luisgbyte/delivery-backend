@@ -31,8 +31,8 @@ class Order extends Model {
         });
 
         this.belongsToMany(models.Product, {
-            through: 'ProductOrders',
-            as: 'products',
+            through: 'product_orders',
+            as: 'product',
             foreignKey: 'order_id',
             otherKey: 'product_id',
         });

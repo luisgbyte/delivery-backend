@@ -34,7 +34,7 @@ module.exports = {
             },
             date: {
                 type: Sequelize.DATE,
-                defaultValue: Date.now(),
+                defaultValue: new Date(),
                 allowNull: false,
             },
             total: {

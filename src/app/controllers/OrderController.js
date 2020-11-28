@@ -1,15 +1,11 @@
 import * as Yup from 'yup';
-// import Sequelize from 'sequelize';
+import { addMinutes, isBefore } from 'date-fns';
 import Order from '../models/Order';
-import Client from '../models/Client';
 import Product from '../models/Product';
 import Payment from '../models/Payment';
 import ProductOrder from '../models/ProductOrder';
-// import database from '../../config/database';
 
 const { Op } = require('sequelize');
-
-// const t = new Sequelize(database);
 
 class OrderController {
     async index(req, res) {
@@ -17,6 +13,7 @@ class OrderController {
 
         const order = await Order.findAll({
             where: {
+                client_id: req.userId,
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
             attributes: ['id', 'total', 'date', 'status'],
@@ -24,11 +21,6 @@ class OrderController {
             limit: 10,
             offset: (page - 1) * 20,
             include: [
-                {
-                    model: Client,
-                    as: 'client',
-                    attributes: ['id', 'name'],
-                },
                 {
                     model: Product,
                     as: 'product',
@@ -48,17 +40,38 @@ class OrderController {
 
     async store(req, res) {
         const schema = Yup.object().shape({
-            products: Yup.array().required(),
-            payment_id: Yup.number().required().positive().integer(),
+            products: Yup.array()
+                .of(
+                    Yup.object().shape({
+                        product_id: Yup.number()
+                            .positive()
+                            .integer()
+                            .required(),
+                        amount: Yup.number().positive().integer().required(),
+                    })
+                )
+                .required(),
+            payments: Yup.object().shape({
+                type: Yup.mixed().oneOf(['Cartão', 'Dinheiro']).required(),
+                chance: Yup.number().positive().integer(),
+                card_type: Yup.mixed().oneOf(['Débito', 'Credito']),
+                card_banner: Yup.mixed().oneOf(['Visa', 'MasterCard']),
+            }),
         });
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
         }
 
-        const { products, ...data } = req.body;
+        const { payments, products } = req.body;
 
-        data.client_id = req.userId;
+        // payments
+        const payment = await Payment.create(payments);
+
+        // order object
+        const order = {};
+        order.client_id = req.userId;
+        order.payment_id = payment.id;
 
         // creating array with product id
         const productsId = products.map((product) => {
@@ -81,9 +94,9 @@ class OrderController {
             0
         );
 
-        data.total = total;
+        order.total = total;
 
-        const savedOrder = await Order.create(data);
+        const savedOrder = await Order.create(order);
 
         // setting order_id for all objects in the order array
         products.map((obj) => {
@@ -112,6 +125,13 @@ class OrderController {
                 .json({ error: 'You are not allowed to perform this action' });
         }
 
+        const dateWithAdd = addMinutes(order.date, 15);
+
+        if (isBefore(dateWithAdd, new Date())) {
+            return res.status(401).json({
+                error: 'You can only cancel orders 15 minutes in advance',
+            });
+        }
         const { id, total, date, status } = await order.update({
             status: 'Cancelado',
         });
