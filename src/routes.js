@@ -20,6 +20,8 @@ import adminMiddleware from './app/middlewares/admin';
 const routes = new Router();
 const upload = multer(multerconfig);
 
+routes.get('/', (req, res) => res.send('ok'));
+
 routes.post('/clients', ClientController.store);
 routes.post('/sessions', SessionController.store);
 
