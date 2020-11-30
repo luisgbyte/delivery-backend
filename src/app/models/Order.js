@@ -5,7 +5,7 @@ class Order extends Model {
         super.init(
             {
                 total: Sequelize.DOUBLE,
-                date: Sequelize.DATE,
+                created_at: Sequelize.DATE,
                 status: {
                     type: Sequelize.ENUM(
                         'Entregue',

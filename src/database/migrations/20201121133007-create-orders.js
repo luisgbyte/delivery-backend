@@ -32,11 +32,6 @@ module.exports = {
                 onDelete: 'SET NULL',
                 allowNull: false,
             },
-            date: {
-                type: Sequelize.DATE,
-                defaultValue: new Date(),
-                allowNull: false,
-            },
             total: {
                 type: Sequelize.DOUBLE,
                 allowNull: false,

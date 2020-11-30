@@ -13,6 +13,7 @@ import OrderController from './app/controllers/OrderController';
 import OrderTrackerController from './app/controllers/OrderTrackerController';
 import ProductStockController from './app/controllers/ProductStockController';
 import OrderStatusController from './app/controllers/OrderStatusController';
+import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
@@ -60,5 +61,8 @@ routes.delete('/products/:id', ProductController.delete);
 routes.put('/products/:id/stock', ProductStockController.update);
 
 routes.put('/orders/:id/status', OrderStatusController.update);
+
+routes.get('/notifications', NotificationController.index);
+routes.put('/notifications/:id', NotificationController.update);
 
 export default routes;

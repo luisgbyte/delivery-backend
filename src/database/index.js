@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 import Admin from '../app/models/Admin';
 import Client from '../app/models/Client';
@@ -28,7 +28,7 @@ const models = [
 class Database {
     constructor() {
         this.init();
-        // this.mongo();
+        this.mongo();
     }
 
     init() {
@@ -42,12 +42,16 @@ class Database {
             );
     }
 
-    // mongo() {
-    //     this.mongoConnection = mongoose.connect(
-    //         'mongodb://localhost:27017/delivery',
-    //         { useNewUrlParser: true, useFindAndModify: true }
-    //     );
-    // }
+    mongo() {
+        this.mongoConnection = mongoose.connect(
+            'mongodb://localhost:27017/delivery',
+            {
+                useNewUrlParser: true,
+                useFindAndModify: false,
+                useUnifiedTopology: true,
+            }
+        );
+    }
 }
 
 export default new Database();

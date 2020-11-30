@@ -21,14 +21,14 @@ class OrderStatusController {
 
         const { status } = req.body;
 
-        const { id, total, date, client_id } = await order.update({
+        const { id, total, created_at, client_id } = await order.update({
             status,
         });
 
         return res.json({
             id,
             total,
-            date,
+            created_at,
             client_id,
             status,
         });

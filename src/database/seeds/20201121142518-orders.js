@@ -7,7 +7,6 @@ module.exports = {
                     client_id: 1,
                     status: 'Realizado',
                     payment_id: 1,
-                    date: new Date(),
                     total: 120,
                     created_at: new Date(),
                     updated_at: new Date(),

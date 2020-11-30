@@ -1,9 +1,12 @@
 import * as Yup from 'yup';
-import { addMinutes, isBefore } from 'date-fns';
+import { addMinutes, isBefore, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Order from '../models/Order';
+import Client from '../models/Client';
 import Product from '../models/Product';
 import Payment from '../models/Payment';
 import ProductOrder from '../models/ProductOrder';
+import Notification from '../schemas/Notification';
 
 const { Op } = require('sequelize');
 
@@ -16,8 +19,8 @@ class OrderController {
                 client_id: req.userId,
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
-            attributes: ['id', 'total', 'date', 'status'],
-            order: ['date'],
+            attributes: ['id', 'total', 'status', 'created_at'],
+            order: ['created_at'],
             limit: 10,
             offset: (page - 1) * 20,
             include: [
@@ -96,18 +99,40 @@ class OrderController {
 
         order.total = total;
 
-        const savedOrder = await Order.create(order);
+        const {
+            id,
+            client_id,
+            status,
+            payment_id,
+            created_at,
+        } = await Order.create(order);
 
         // setting order_id for all objects in the order array
         products.map((obj) => {
-            obj.order_id = savedOrder.id;
+            obj.order_id = id;
             return obj;
         });
 
         // creating several records in product_order
         await ProductOrder.bulkCreate(products, { returning: true });
 
-        return res.status(200).json(savedOrder);
+        // Administrator order notification
+        const client = await Client.findByPk(req.userId);
+        const formattedDate = format(
+            created_at,
+            "'às' HH:mm'h' 'de' dd/MM/yyyy",
+            {
+                locale: pt,
+            }
+        );
+
+        await Notification.create({
+            content: `Novo pedido de ${client.name} ${formattedDate}`,
+        });
+
+        return res
+            .status(200)
+            .json({ id, total, status, client_id, payment_id });
     }
 
     async delete(req, res) {
