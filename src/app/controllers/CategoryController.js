@@ -78,9 +78,11 @@ class CategoryController {
             return res.status(401).json({ error: 'Category not found' });
         }
 
+        const { id, name } = category;
+
         await category.destroy();
 
-        return res.status(200).json({});
+        return res.status(200).json({ id, name });
     }
 }
 

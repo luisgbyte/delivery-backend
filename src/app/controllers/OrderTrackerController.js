@@ -14,8 +14,8 @@ class OrderTrackerController {
             where: {
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
-            attributes: ['id', 'total', 'date', 'status'],
-            order: ['date'],
+            attributes: ['id', 'total', 'created_at', 'status'],
+            order: ['created_at'],
             limit: 10,
             offset: (page - 1) * 20,
             include: [

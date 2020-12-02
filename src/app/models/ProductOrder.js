@@ -6,7 +6,7 @@ class ProductOrder extends Model {
             {
                 product_id: Sequelize.INTEGER,
                 order_id: Sequelize.INTEGER,
-                amount: Sequelize.INTEGER,
+                quantity: Sequelize.INTEGER,
             },
             {
                 sequelize,

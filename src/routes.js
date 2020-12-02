@@ -17,6 +17,7 @@ import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './app/middlewares/auth';
 import adminMiddleware from './app/middlewares/admin';
+import userMiddleware from './app/middlewares/user';
 
 const routes = new Router();
 const upload = multer(multerconfig);
@@ -27,18 +28,18 @@ routes.post('/clients', ClientController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
-routes.get('/clients', ClientController.index);
-routes.put('/clients', ClientController.update);
+routes.get('/clients', userMiddleware, ClientController.index);
+routes.put('/clients', userMiddleware, ClientController.update);
+
+routes.get('/orders', userMiddleware, OrderController.index);
+routes.post('/orders', userMiddleware, OrderController.store);
+routes.delete('/orders/:id', userMiddleware, OrderController.delete);
+
+routes.get('/addresses', userMiddleware, AddressController.index);
+routes.post('/addresses', userMiddleware, AddressController.store);
+routes.put('/addresses', userMiddleware, AddressController.update);
 
 routes.get('/products', ProductController.index);
-
-routes.get('/orders', OrderController.index);
-routes.post('/orders', OrderController.store);
-routes.delete('/orders/:id', OrderController.delete);
-
-routes.get('/addresses', AddressController.index);
-routes.post('/addresses', AddressController.store);
-routes.put('/addresses', AddressController.update);
 
 routes.use(adminMiddleware);
 routes.post('/admins', AdminController.store);

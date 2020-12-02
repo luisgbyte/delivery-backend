@@ -36,7 +36,7 @@ module.exports = {
                 references: { model: 'categories', key: 'id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'SET NULL',
-                allowNull: false,
+                allowNull: true,
             },
             created_at: {
                 type: Sequelize.DATE,

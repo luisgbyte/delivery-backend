@@ -8,7 +8,7 @@ module.exports = {
                     email: 'lg@gmail.com',
                     password_hash:
                         '$2a$08$GCm9uNTwjLC9wASbLLq7P.sAg1szomjo6qYbagAgFEeaN3xhnoP3e',
-                    cpf: '11270668625',
+                    cpf: '927.858.290-50',
                     created_at: new Date(),
                     updated_at: new Date(),
                 },

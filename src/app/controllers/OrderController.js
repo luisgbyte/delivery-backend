@@ -50,7 +50,7 @@ class OrderController {
                             .positive()
                             .integer()
                             .required(),
-                        amount: Yup.number().positive().integer().required(),
+                        quantity: Yup.number().positive().integer().required(),
                     })
                 )
                 .required(),
@@ -93,7 +93,7 @@ class OrderController {
         // calculating the total order
         const total = result.reduce(
             (acc, product, index) =>
-                acc + product.price * products[index].amount,
+                acc + product.price * products[index].quantity,
             0
         );
 

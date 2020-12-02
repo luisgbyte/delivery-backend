@@ -77,24 +77,36 @@ class ProductController {
 
     async update(req, res) {
         const schema = Yup.object().shape({
-            name: Yup.string().required().max(20),
-            price: Yup.number().required().positive().integer(),
-            description: Yup.string().required().max(20),
+            name: Yup.string().max(20),
+            price: Yup.number().positive().integer(),
+            description: Yup.string().max(20),
             stocked: Yup.boolean(),
-            category_id: Yup.number().required().positive().integer(),
+            category_id: Yup.number().positive().integer(),
+            file_id: Yup.number().positive().integer(),
         });
 
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
         }
 
-        const { category_id } = req.body;
+        const { category_id, file_id } = req.body;
 
         // checking if the category is valid
-        const categoryExists = await Category.findByPk(category_id);
+        if (category_id) {
+            const categoryExists = await Category.findByPk(category_id);
 
-        if (!categoryExists) {
-            return res.status(401).json({ error: 'Category is not valid' });
+            if (!categoryExists) {
+                return res.status(401).json({ error: 'Category is not valid' });
+            }
+        }
+
+        // checking if the file/image is valid
+        if (file_id) {
+            const fileExists = await File.findByPk(file_id);
+
+            if (!fileExists) {
+                return res.status(401).json({ error: 'Image is not valid' });
+            }
         }
 
         // fetch product id from the database
@@ -110,7 +122,15 @@ class ProductController {
             req.body
         );
 
-        return res.json({ id, name, price, description, stocked });
+        return res.json({
+            id,
+            name,
+            price,
+            description,
+            stocked,
+            category_id,
+            file_id,
+        });
     }
 
     async delete(req, res) {
