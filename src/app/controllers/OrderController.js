@@ -150,6 +150,10 @@ class OrderController {
                 .json({ error: 'You are not allowed to perform this action' });
         }
 
+        // checking if the order is canceled
+        if (order.status === 'Cancelado') {
+            return res.status(401).json({ error: 'Order is already canceled' });
+        }
         const dateWithAdd = addMinutes(order.date, 15);
 
         if (isBefore(dateWithAdd, new Date())) {
@@ -157,11 +161,25 @@ class OrderController {
                 error: 'You can only cancel orders 15 minutes in advance',
             });
         }
-        const { id, total, date, status } = await order.update({
+        const { id, total, status } = await order.update({
             status: 'Cancelado',
         });
 
-        return res.status(200).json({ id, total, date, status });
+        // Administrator order cancel notification
+        const client = await Client.findByPk(req.userId);
+        const formattedDate = format(
+            new Date(),
+            "'às' HH:mm'h' 'de' dd/MM/yyyy",
+            {
+                locale: pt,
+            }
+        );
+
+        await Notification.create({
+            content: `Novo cancelamento de ${client.name} ${formattedDate}`,
+        });
+
+        return res.status(200).json({ id, total, status });
     }
 }
 
