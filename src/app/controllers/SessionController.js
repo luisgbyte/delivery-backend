@@ -27,13 +27,13 @@ class SessionController {
             return res.status(401).json({ error: 'User not found' });
         }
 
-        if (
-            !((await client) ? client : administrator.checkPassword(password))
-        ) {
+        const type = client || administrator;
+
+        if (!(await type.checkPassword(password))) {
             return res.status(401).json({ error: 'Password does not match' });
         }
 
-        const { id, name } = client || administrator;
+        const { id, name } = type;
 
         // add to the token payload if the user is an administrator
         const admin = !!administrator;
