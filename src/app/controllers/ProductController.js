@@ -62,17 +62,27 @@ class ProductController {
             return res.status(401).json({ error: 'Product already exists' });
         }
 
-        const { id, price, description, stocked } = await Product.create(
-            req.body
-        );
+        const { id } = await Product.create(req.body);
 
-        return res.json({
-            id,
-            name,
-            price,
-            description,
-            stocked,
+        // return interesting fields for the frontend
+        const fieldsProduct = await Product.findOne({
+            where: { id },
+            attributes: ['id', 'name', 'price', 'description', 'stocked'],
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name'],
+                },
+                {
+                    model: File,
+                    as: 'file',
+                    attributes: ['id', 'path', 'url'],
+                },
+            ],
         });
+
+        return res.json(fieldsProduct);
     }
 
     async update(req, res) {
@@ -90,6 +100,14 @@ class ProductController {
         }
 
         const { category_id, file_id } = req.body;
+
+        // fetch product id from the database
+        const product = await Product.findByPk(req.params.id);
+
+        // check if product exists
+        if (!product) {
+            return res.status(401).json({ error: 'Product is not valid' });
+        }
 
         // checking if the category is valid
         if (category_id) {
@@ -109,28 +127,28 @@ class ProductController {
             }
         }
 
-        // fetch product id from the database
-        const product = await Product.findByPk(req.params.id);
-
-        // check if product exists
-        if (!product) {
-            return res.status(401).json({ error: 'Product is not valid' });
-        }
-
         // update product
-        const { id, name, price, description, stocked } = await product.update(
-            req.body
-        );
+        const { id } = await product.update(req.body);
 
-        return res.json({
-            id,
-            name,
-            price,
-            description,
-            stocked,
-            category_id,
-            file_id,
+        // return interesting fields for the frontend
+        const fieldsProduct = await Product.findOne({
+            where: { id },
+            attributes: ['id', 'name', 'price', 'description', 'stocked'],
+            include: [
+                {
+                    model: Category,
+                    as: 'category',
+                    attributes: ['id', 'name'],
+                },
+                {
+                    model: File,
+                    as: 'file',
+                    attributes: ['id', 'path', 'url'],
+                },
+            ],
         });
+
+        return res.json(fieldsProduct);
     }
 
     async delete(req, res) {
