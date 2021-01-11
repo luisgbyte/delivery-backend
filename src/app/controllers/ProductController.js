@@ -34,7 +34,7 @@ class ProductController {
     async store(req, res) {
         const schema = Yup.object().shape({
             name: Yup.string().required().max(20),
-            price: Yup.number().required().positive().integer(),
+            price: Yup.number().required().positive(),
             description: Yup.string().required().max(20),
             stocked: Yup.boolean(),
             category_id: Yup.number().required().positive().integer(),
@@ -88,7 +88,7 @@ class ProductController {
     async update(req, res) {
         const schema = Yup.object().shape({
             name: Yup.string().max(20),
-            price: Yup.number().positive().integer(),
+            price: Yup.number().positive(),
             description: Yup.string().max(20),
             stocked: Yup.boolean(),
             category_id: Yup.number().positive().integer(),
