@@ -9,7 +9,6 @@ class ProductController {
         const { page = 1 } = req.query;
 
         const product = await Product.findAll({
-            where: { stocked: true },
             attributes: ['id', 'name', 'price', 'description', 'stocked'],
             order: ['name'],
             limit: 10,
