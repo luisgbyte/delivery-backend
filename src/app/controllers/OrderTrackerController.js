@@ -3,6 +3,8 @@ import Order from '../models/Order';
 import Product from '../models/Product';
 import Payment from '../models/Payment';
 import Client from '../models/Client';
+import File from '../models/File';
+import Address from '../models/Address';
 
 const { Op } = require('sequelize');
 
@@ -23,12 +25,28 @@ class OrderTrackerController {
                     model: Client,
                     as: 'client',
                     attributes: ['id', 'name'],
+                    include: [
+                        {
+                            model: Address,
+                            as: 'address',
+                            attributes: [
+                                'city',
+                                'neighborhood',
+                                'street',
+                                'number',
+                                'cep',
+                            ],
+                        },
+                    ],
                 },
                 {
                     model: Product,
                     as: 'product',
                     attributes: ['id', 'name'],
                     through: { attributes: [] },
+                    include: [
+                        { model: File, as: 'file', attributes: ['id', 'url'] },
+                    ],
                 },
                 {
                     model: Payment,
