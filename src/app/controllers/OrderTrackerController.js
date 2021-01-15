@@ -45,7 +45,11 @@ class OrderTrackerController {
                     attributes: ['id', 'name'],
                     through: { attributes: [] },
                     include: [
-                        { model: File, as: 'file', attributes: ['id', 'url'] },
+                        {
+                            model: File,
+                            as: 'file',
+                            attributes: ['id', 'url', 'path'],
+                        },
                     ],
                 },
                 {
