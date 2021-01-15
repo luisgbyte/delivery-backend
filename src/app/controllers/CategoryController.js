@@ -47,7 +47,9 @@ class CategoryController {
         }
 
         const { name } = req.body;
-        const { id } = req.params;
+        let { id } = req.params;
+
+        id = Number(id);
 
         // checking if the category exists
         const category = await Category.findByPk(id);
