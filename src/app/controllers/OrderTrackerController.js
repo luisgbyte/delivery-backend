@@ -17,7 +17,7 @@ class OrderTrackerController {
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
             attributes: ['id', 'total', 'created_at', 'status'],
-            order: ['created_at'],
+            order: [['created_at', 'DESC']],
             limit: 10,
             offset: (page - 1) * 20,
             include: [
