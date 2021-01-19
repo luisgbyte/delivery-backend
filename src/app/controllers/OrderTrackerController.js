@@ -42,8 +42,8 @@ class OrderTrackerController {
                 {
                     model: Product,
                     as: 'product',
-                    attributes: ['id', 'name'],
-                    through: { attributes: [] },
+                    attributes: ['id', 'name', 'price'],
+                    through: { attributes: ['quantity'] },
                     include: [
                         {
                             model: File,
@@ -55,7 +55,13 @@ class OrderTrackerController {
                 {
                     model: Payment,
                     as: 'payment',
-                    attributes: ['id', 'type'],
+                    attributes: [
+                        'id',
+                        'type',
+                        'chance',
+                        'card_type',
+                        'card_banner',
+                    ],
                 },
             ],
         });
