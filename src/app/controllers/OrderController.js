@@ -68,6 +68,17 @@ class OrderController {
 
         const { payments, products } = req.body;
 
+        // ordering product req order
+        products.sort((a, b) => {
+            if (a.product_id > b.product_id) {
+                return 1;
+            }
+            if (a.product_id < b.product_id) {
+                return -1;
+            }
+            return 0;
+        });
+
         // payments
         const payment = await Payment.create(payments);
 
@@ -82,16 +93,27 @@ class OrderController {
         });
 
         // seeking all products
-        const result = await Product.findAll({
+        const products_db = await Product.findAll({
             where: { id: productsId },
         });
 
-        if (result.length < products.length) {
+        if (products_db.length < products.length) {
             return res.status(400).json({ error: 'Products not found' });
         }
 
+        // ordering products db
+        products_db.sort((a, b) => {
+            if (a.id > b.id) {
+                return 1;
+            }
+            if (a.id < b.id) {
+                return -1;
+            }
+            return 0;
+        });
+
         // calculating the total order
-        const total = result.reduce(
+        const total = products_db.reduce(
             (acc, product, index) =>
                 acc + product.price * products[index].quantity,
             0
