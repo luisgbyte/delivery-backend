@@ -18,7 +18,7 @@ class OrderTrackerController {
             },
             attributes: ['id', 'total', 'created_at', 'status'],
             order: [['created_at', 'DESC']],
-            limit: 10,
+            limit: 5,
             offset: (page - 1) * 20,
             include: [
                 {
