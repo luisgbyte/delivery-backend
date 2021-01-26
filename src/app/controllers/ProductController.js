@@ -11,8 +11,8 @@ class ProductController {
         const product = await Product.findAll({
             attributes: ['id', 'name', 'price', 'description', 'stocked'],
             order: ['name'],
-            limit: 10,
-            offset: (page - 1) * 20,
+            limit: 9,
+            offset: (page - 1) * 9,
             include: [
                 {
                     model: Category,

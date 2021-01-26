@@ -12,14 +12,15 @@ class OrderTrackerController {
     async index(req, res) {
         const { page = 1 } = req.query;
 
-        const order = await Order.findAll({
+        const order = await Order.findAndCountAll({
+            distinct: true,
             where: {
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
             attributes: ['id', 'total', 'created_at', 'status'],
             order: [['created_at', 'DESC']],
-            limit: 5,
-            offset: (page - 1) * 20,
+            limit: 3,
+            offset: (page - 1) * 3,
             include: [
                 {
                     model: Client,

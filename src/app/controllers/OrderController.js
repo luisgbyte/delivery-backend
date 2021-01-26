@@ -21,8 +21,8 @@ class OrderController {
             },
             attributes: ['id', 'total', 'status', 'created_at'],
             order: ['created_at'],
-            limit: 10,
-            offset: (page - 1) * 20,
+            limit: 5,
+            offset: (page - 1) * 5,
             include: [
                 {
                     model: Product,
