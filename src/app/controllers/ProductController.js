@@ -8,11 +8,11 @@ class ProductController {
     async index(req, res) {
         const { page = 1 } = req.query;
 
-        const product = await Product.findAll({
+        const product = await Product.findAndCountAll({
             attributes: ['id', 'name', 'price', 'description', 'stocked'],
             order: ['name'],
-            limit: 9,
-            offset: (page - 1) * 9,
+            limit: 6,
+            offset: (page - 1) * 6,
             include: [
                 {
                     model: Category,
