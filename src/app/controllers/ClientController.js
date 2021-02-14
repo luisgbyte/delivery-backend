@@ -15,7 +15,6 @@ class ClientController {
             name: Yup.string().required(),
             email: Yup.string().email().required(),
             password: Yup.string().required().min(6),
-            cpf: Yup.string().required().min(11),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -30,13 +29,12 @@ class ClientController {
             return res.status(400).json({ error: 'User already exists.' });
         }
 
-        const { id, name, email, cpf } = await Client.create(req.body);
+        const { id, name, email } = await Client.create(req.body);
 
         return res.json({
             id,
             name,
             email,
-            cpf,
         });
     }
 

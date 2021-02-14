@@ -22,7 +22,7 @@ module.exports = {
             },
             cpf: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
                 unique: true,
             },
             created_at: {
