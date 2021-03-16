@@ -8,7 +8,6 @@ class Address extends Model {
                 neighborhood: Sequelize.STRING,
                 street: Sequelize.STRING,
                 number: Sequelize.STRING,
-                cep: Sequelize.STRING,
             },
             {
                 sequelize,

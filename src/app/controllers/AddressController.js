@@ -12,7 +12,6 @@ class AddressController {
                 'neighborhood',
                 'street',
                 'number',
-                'cep',
                 'client_id',
             ],
         });
@@ -26,7 +25,6 @@ class AddressController {
             neighborhood: Yup.string().required(),
             street: Yup.string().required(),
             number: Yup.string().required(),
-            cep: Yup.string().required(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -46,14 +44,9 @@ class AddressController {
         // defining 'client_id' with 'user_id' of the user session
         req.body.client_id = req.userId;
 
-        const {
-            id,
-            city,
-            neighborhood,
-            street,
-            number,
-            cep,
-        } = await Address.create(req.body);
+        const { id, city, neighborhood, street, number } = await Address.create(
+            req.body
+        );
 
         return res.json({
             id,
@@ -61,7 +54,6 @@ class AddressController {
             neighborhood,
             street,
             number,
-            cep,
         });
     }
 
@@ -71,7 +63,6 @@ class AddressController {
             neighborhood: Yup.string().required(),
             street: Yup.string().required(),
             number: Yup.string().required(),
-            cep: Yup.string().required(),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -85,16 +76,11 @@ class AddressController {
         // defining 'client_id' with 'user_id' of the user session
         req.body.client_id = req.userId;
 
-        const {
-            id,
-            city,
-            neighborhood,
-            street,
-            number,
-            cep,
-        } = await address.update(req.body);
+        const { id, city, neighborhood, street, number } = await address.update(
+            req.body
+        );
 
-        return res.json({ id, city, neighborhood, street, number, cep });
+        return res.json({ id, city, neighborhood, street, number });
     }
 }
 

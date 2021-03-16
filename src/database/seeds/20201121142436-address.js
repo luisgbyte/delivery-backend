@@ -4,11 +4,10 @@ module.exports = {
             'addresses',
             [
                 {
-                    city: 'Arinos-mg',
-                    neighborhood: 'Primavera1',
-                    street: 'Rua tal',
+                    city: 'Brasília',
+                    neighborhood: 'Primavera',
+                    street: 'Rua Null',
                     number: 126,
-                    cep: '38680-000',
                     client_id: 1,
                     created_at: new Date(),
                     updated_at: new Date(),
