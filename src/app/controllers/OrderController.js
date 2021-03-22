@@ -12,7 +12,7 @@ const { Op } = require('sequelize');
 
 class OrderController {
     async index(req, res) {
-        const { page = 1 } = req.query;
+        // const { page = 1 } = req.query;
 
         const order = await Order.findAll({
             where: {
@@ -21,8 +21,8 @@ class OrderController {
             },
             attributes: ['id', 'total', 'status', 'created_at'],
             order: ['created_at'],
-            limit: 5,
-            offset: (page - 1) * 5,
+            // limit: 5,
+            // offset: (page - 1) * 5,
             include: [
                 {
                     model: Product,
@@ -55,10 +55,10 @@ class OrderController {
                 )
                 .required(),
             payments: Yup.object().shape({
-                type: Yup.mixed().oneOf(['Cartão', 'Dinheiro']).required(),
+                type: Yup.mixed()
+                    .oneOf(['cartao_credito', 'cartao_debito', 'dinheiro'])
+                    .required(),
                 chance: Yup.number().positive().integer(),
-                card_type: Yup.mixed().oneOf(['Débito', 'Credito']),
-                card_banner: Yup.mixed().oneOf(['Visa', 'MasterCard']),
             }),
         });
 

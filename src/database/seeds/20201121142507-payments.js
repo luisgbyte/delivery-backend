@@ -4,10 +4,8 @@ module.exports = {
             'payments',
             [
                 {
-                    type: 'Cartão',
-                    chance: 50,
-                    card_type: 'Débito',
-                    card_banner: 'Visa',
+                    type: 'cartao_credito',
+                    chance: null,
                     created_at: new Date(),
                     updated_at: new Date(),
                 },

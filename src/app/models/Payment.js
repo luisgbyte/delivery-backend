@@ -5,15 +5,13 @@ class Payment extends Model {
         super.init(
             {
                 type: {
-                    type: Sequelize.ENUM('Cartão', 'Dinheiro'),
+                    type: Sequelize.ENUM(
+                        'cartao_credito',
+                        'cartao_debito',
+                        'dinheiro'
+                    ),
                 },
                 chance: Sequelize.DOUBLE,
-                card_type: {
-                    type: Sequelize.ENUM('Débido', 'Crédito'),
-                },
-                card_banner: {
-                    type: Sequelize.ENUM('Visa', 'MasterCard'),
-                },
             },
             {
                 sequelize,

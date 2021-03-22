@@ -8,19 +8,15 @@ module.exports = {
                 primaryKey: true,
             },
             type: {
-                type: Sequelize.ENUM('Cartão', 'Dinheiro'),
+                type: Sequelize.ENUM(
+                    'cartao_debito',
+                    'cartao_credito',
+                    'dinheiro'
+                ),
                 allowNull: false,
             },
             chance: {
                 type: Sequelize.DOUBLE,
-                allowNull: true,
-            },
-            card_type: {
-                type: Sequelize.ENUM('Débito', 'Crédito'),
-                allowNull: true,
-            },
-            card_banner: {
-                type: Sequelize.ENUM('Visa', 'MasterCard'),
                 allowNull: true,
             },
             created_at: {
