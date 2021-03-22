@@ -6,26 +6,47 @@ import File from '../models/File';
 
 class ProductController {
     async index(req, res) {
-        const { page = 1 } = req.query;
+        const { page = null } = req.query;
 
-        const product = await Product.findAndCountAll({
-            attributes: ['id', 'name', 'price', 'description', 'stocked'],
-            order: ['name'],
-            limit: 6,
-            offset: (page - 1) * 6,
-            include: [
-                {
-                    model: Category,
-                    as: 'category',
-                    attributes: ['id', 'name'],
-                },
-                {
-                    model: File,
-                    as: 'file',
-                    attributes: ['id', 'path', 'url'],
-                },
-            ],
-        });
+        let product = '';
+        // test aq
+        if (page !== null) {
+            product = await Product.findAndCountAll({
+                attributes: ['id', 'name', 'price', 'description', 'stocked'],
+                order: ['name'],
+                limit: 6,
+                offset: (page - 1) * 6,
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'path', 'url'],
+                    },
+                ],
+            });
+        } else {
+            product = await Product.findAll({
+                attributes: ['id', 'name', 'price', 'description', 'stocked'],
+                order: ['name'],
+                include: [
+                    {
+                        model: Category,
+                        as: 'category',
+                        attributes: ['id', 'name'],
+                    },
+                    {
+                        model: File,
+                        as: 'file',
+                        attributes: ['id', 'path', 'url'],
+                    },
+                ],
+            });
+        }
 
         return res.json(product);
     }

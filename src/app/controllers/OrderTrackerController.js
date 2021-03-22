@@ -35,7 +35,7 @@ class OrderTrackerController {
                                 'neighborhood',
                                 'street',
                                 'number',
-                                'cep',
+                                // 'cep',
                             ],
                         },
                     ],
