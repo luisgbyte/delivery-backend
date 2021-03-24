@@ -20,7 +20,7 @@ class OrderController {
                 [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
             },
             attributes: ['id', 'total', 'status', 'created_at'],
-            order: ['created_at'],
+            order: [['created_at', 'DESC']],
             // limit: 5,
             // offset: (page - 1) * 5,
             include: [
@@ -28,7 +28,7 @@ class OrderController {
                     model: Product,
                     as: 'product',
                     attributes: ['id', 'name'],
-                    through: { attributes: [] },
+                    through: { attributes: ['quantity'] },
                 },
                 {
                     model: Payment,

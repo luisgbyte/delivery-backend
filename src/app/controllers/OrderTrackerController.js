@@ -35,7 +35,6 @@ class OrderTrackerController {
                                 'neighborhood',
                                 'street',
                                 'number',
-                                // 'cep',
                             ],
                         },
                     ],
@@ -56,13 +55,7 @@ class OrderTrackerController {
                 {
                     model: Payment,
                     as: 'payment',
-                    attributes: [
-                        'id',
-                        'type',
-                        'chance',
-                        'card_type',
-                        'card_banner',
-                    ],
+                    attributes: ['id', 'type', 'chance'],
                 },
             ],
         });
