@@ -4,6 +4,8 @@ import Product from '../models/Product';
 import Category from '../models/Category';
 import File from '../models/File';
 
+const { Op } = require('sequelize');
+
 class ProductController {
     async index(req, res) {
         const { page = null } = req.query;
@@ -31,6 +33,11 @@ class ProductController {
             });
         } else {
             product = await Product.findAll({
+                where: {
+                    stocked: {
+                        [Op.eq]: true,
+                    },
+                },
                 attributes: ['id', 'name', 'price', 'description', 'stocked'],
                 order: ['name'],
                 include: [
