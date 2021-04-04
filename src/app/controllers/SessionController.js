@@ -38,11 +38,15 @@ class SessionController {
         // add to the token payload if the user is an administrator
         const admin = !!administrator;
 
+        // used for validation if the correct user is logging into the application that has permission
+        const whoami = administrator ? 'admin' : 'client';
+
         return res.json({
             user: {
                 id,
                 name,
                 email,
+                whoami,
             },
             token: jwt.sign({ id, admin }, authConfig.secret, {
                 expiresIn: authConfig.expiresIn,
