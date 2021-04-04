@@ -15,7 +15,18 @@ class OrderTrackerController {
         const order = await Order.findAndCountAll({
             distinct: true,
             where: {
-                [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
+                [Op.not]: {
+                    [Op.and]: [
+                        { status: ['Cancelado', 'Entregue'] },
+                        {
+                            updated_at: {
+                                [Op.lt]: new Date(
+                                    new Date().valueOf() - 5 * 60 * 1000
+                                ),
+                            },
+                        },
+                    ],
+                },
             },
             attributes: ['id', 'total', 'created_at', 'status'],
             order: [['created_at', 'DESC']],

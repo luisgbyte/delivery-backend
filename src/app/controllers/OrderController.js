@@ -17,7 +17,18 @@ class OrderController {
         const order = await Order.findAll({
             where: {
                 client_id: req.userId,
-                [Op.not]: [{ status: ['Entregue', 'Cancelado'] }],
+                [Op.not]: {
+                    [Op.and]: [
+                        { status: ['Cancelado', 'Entregue'] },
+                        {
+                            updated_at: {
+                                [Op.lt]: new Date(
+                                    new Date().valueOf() - 5 * 60 * 1000
+                                ),
+                            },
+                        },
+                    ],
+                },
             },
             attributes: ['id', 'total', 'status', 'created_at'],
             order: [['created_at', 'DESC']],
