@@ -19,7 +19,6 @@ class CategoryController {
         if (!(await schema.isValid(req.body))) {
             return res.status(400).json({ error: 'Validation fails' });
         }
-
         // checking if the category name already exists
         const categoryExists = await Category.findOne({
             where: { name: req.body.name },
