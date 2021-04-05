@@ -6,8 +6,8 @@ class Payment extends Model {
             {
                 type: {
                     type: Sequelize.ENUM(
-                        'cartao_credito',
-                        'cartao_debito',
+                        'cartão de crédito',
+                        'cartão de débito',
                         'dinheiro'
                     ),
                 },

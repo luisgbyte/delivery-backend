@@ -9,8 +9,8 @@ module.exports = {
             },
             type: {
                 type: Sequelize.ENUM(
-                    'cartao_debito',
-                    'cartao_credito',
+                    'cartão de débito',
+                    'cartão de crédito',
                     'dinheiro'
                 ),
                 allowNull: false,

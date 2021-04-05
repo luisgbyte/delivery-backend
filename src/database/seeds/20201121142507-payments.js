@@ -4,7 +4,7 @@ module.exports = {
             'payments',
             [
                 {
-                    type: 'cartao_credito',
+                    type: 'cartão de crédito',
                     chance: null,
                     created_at: new Date(),
                     updated_at: new Date(),
