@@ -185,11 +185,16 @@ class OrderController {
                 .json({ error: 'You are not allowed to perform this action' });
         }
 
-        // checking if the order is canceled
-        if (order.status === 'Cancelado') {
-            return res.status(401).json({ error: 'Order is already canceled' });
+        // checking if the order is canceled or delivered
+        if (order.status === 'Cancelado' || order.status === 'Entregue') {
+            return res.status(401).json({
+                error:
+                    'The order cannot be canceled because its status is canceled or delivered',
+            });
         }
+
         const dateWithAdd = addMinutes(order.date, 15);
+
         console.log(dateWithAdd);
         if (isBefore(dateWithAdd, new Date())) {
             return res.status(401).json({

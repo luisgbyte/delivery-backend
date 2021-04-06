@@ -21,6 +21,17 @@ class OrderStatusController {
 
         const { status } = req.body;
 
+        // no cancellation action on orders delivered or already canceled
+        if (
+            status === 'Cancelado' &&
+            (order.status === 'Entregue' || order.status === 'Cancelado')
+        ) {
+            return res.status(401).json({
+                error:
+                    'The order cannot be canceled because its status is canceled or delivered',
+            });
+        }
+
         const { id, total, created_at, client_id } = await order.update({
             status,
         });
