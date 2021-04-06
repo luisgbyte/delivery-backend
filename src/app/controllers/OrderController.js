@@ -193,9 +193,8 @@ class OrderController {
             });
         }
 
-        const dateWithAdd = addMinutes(order.date, 15);
+        const dateWithAdd = addMinutes(order.created_at, 10);
 
-        console.log(dateWithAdd);
         if (isBefore(dateWithAdd, new Date())) {
             return res.status(401).json({
                 error: 'You can only cancel orders 15 minutes in advance',
