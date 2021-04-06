@@ -65,7 +65,11 @@ class OrderController {
                 .required(),
             payments: Yup.object().shape({
                 type: Yup.mixed()
-                    .oneOf(['cartao_credito', 'cartao_debito', 'dinheiro'])
+                    .oneOf([
+                        'cartão de crédito',
+                        'cartão de débito',
+                        'dinheiro',
+                    ])
                     .required(),
                 chance: Yup.number().positive().integer(),
             }),
@@ -186,7 +190,7 @@ class OrderController {
             return res.status(401).json({ error: 'Order is already canceled' });
         }
         const dateWithAdd = addMinutes(order.date, 15);
-
+        console.log(dateWithAdd);
         if (isBefore(dateWithAdd, new Date())) {
             return res.status(401).json({
                 error: 'You can only cancel orders 15 minutes in advance',
