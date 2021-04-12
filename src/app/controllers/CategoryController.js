@@ -63,7 +63,7 @@ class CategoryController {
             where: { name },
         });
 
-        if (categoryExists.id !== id) {
+        if (categoryExists && categoryExists.id !== id) {
             return res.status(401).json({ error: 'Category already exists' });
         }
 
