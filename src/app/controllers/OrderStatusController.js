@@ -10,13 +10,13 @@ class OrderStatusController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const order = await Order.findByPk(req.params.id);
 
         if (!order) {
-            return res.status(401).json({ error: 'Order does not exist' });
+            return res.status(401).json({ error: 'O pedido não existe' });
         }
 
         const { status } = req.body;
@@ -27,8 +27,7 @@ class OrderStatusController {
             (order.status === 'Entregue' || order.status === 'Cancelado')
         ) {
             return res.status(401).json({
-                error:
-                    'The order cannot be canceled because its status is canceled or delivered',
+                error: `O pedido não pode ser cancelado porque seu status já é 'cancelado' ou 'entregue'`,
             });
         }
 

@@ -70,7 +70,7 @@ class ProductController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { name, category_id } = req.body;
@@ -79,7 +79,7 @@ class ProductController {
         const categoryExists = await Category.findByPk(category_id);
 
         if (!categoryExists) {
-            return res.status(401).json({ error: 'Category is not valid' });
+            return res.status(401).json({ error: 'Categoria não é válida' });
         }
 
         // checking if the product name already exists
@@ -88,7 +88,7 @@ class ProductController {
         });
 
         if (productExists) {
-            return res.status(401).json({ error: 'Product already exists' });
+            return res.status(401).json({ error: 'Produto já existe' });
         }
 
         const { id } = await Product.create(req.body);
@@ -125,7 +125,7 @@ class ProductController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { category_id, file_id } = req.body;
@@ -135,7 +135,7 @@ class ProductController {
 
         // check if product exists
         if (!product) {
-            return res.status(401).json({ error: 'Product is not valid' });
+            return res.status(401).json({ error: 'Produto não é válido' });
         }
 
         // checking if the category is valid
@@ -143,7 +143,9 @@ class ProductController {
             const categoryExists = await Category.findByPk(category_id);
 
             if (!categoryExists) {
-                return res.status(401).json({ error: 'Category is not valid' });
+                return res
+                    .status(401)
+                    .json({ error: 'Categoria não é válida' });
             }
         }
 
@@ -152,7 +154,7 @@ class ProductController {
             const fileExists = await File.findByPk(file_id);
 
             if (!fileExists) {
-                return res.status(401).json({ error: 'Image is not valid' });
+                return res.status(401).json({ error: 'Imagem não é válida' });
             }
         }
 
@@ -185,7 +187,7 @@ class ProductController {
 
         // checking if the product exists
         if (!product) {
-            return res.status(401).json({ error: 'Product not found' });
+            return res.status(401).json({ error: 'Produto não encontrado' });
         }
 
         // validation: check if there is a product order in which the status is different from: 'delivered' or 'canceled'

@@ -17,7 +17,7 @@ class CategoryController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         // checking if the category name already exists
@@ -26,7 +26,7 @@ class CategoryController {
         });
 
         if (categoryExists) {
-            return res.status(401).json({ error: 'Category already exists' });
+            return res.status(401).json({ error: 'Categoria já existe' });
         }
 
         const { id, name } = await Category.create(req.body);
@@ -43,7 +43,7 @@ class CategoryController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { name } = req.body;
@@ -55,7 +55,7 @@ class CategoryController {
         const category = await Category.findByPk(id);
 
         if (!category) {
-            return res.status(401).json({ error: 'Category not found' });
+            return res.status(401).json({ error: 'Categoria não encontrada' });
         }
 
         // checking if the category name already exists
@@ -64,7 +64,7 @@ class CategoryController {
         });
 
         if (categoryExists && categoryExists.id !== id) {
-            return res.status(401).json({ error: 'Category already exists' });
+            return res.status(401).json({ error: 'Categoria já existe' });
         }
 
         await category.update(req.body);
@@ -77,7 +77,7 @@ class CategoryController {
 
         // checking if the category exists
         if (!category) {
-            return res.status(401).json({ error: 'Category not found' });
+            return res.status(401).json({ error: 'Categoria não encontrada' });
         }
 
         const { id, name } = category;

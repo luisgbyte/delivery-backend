@@ -76,7 +76,7 @@ class OrderController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { payments, products } = req.body;
@@ -111,7 +111,7 @@ class OrderController {
         });
 
         if (products_db.length < products.length) {
-            return res.status(400).json({ error: 'Products not found' });
+            return res.status(400).json({ error: 'Produto não encontrado' });
         }
 
         // ordering products db
@@ -175,7 +175,7 @@ class OrderController {
 
         // checking if the order exists
         if (!order) {
-            return res.status(401).json({ error: 'Order not found' });
+            return res.status(401).json({ error: 'Pedido não encontrado' });
         }
 
         // checking if the order belongs to the user
@@ -188,8 +188,7 @@ class OrderController {
         // checking if the order is canceled or delivered
         if (order.status === 'Cancelado' || order.status === 'Entregue') {
             return res.status(401).json({
-                error:
-                    'The order cannot be canceled because its status is canceled or delivered',
+                error: `O pedido não pode ser cancelado porque seu status foi 'cancelado' ou 'entregue'`,
             });
         }
 
@@ -197,7 +196,8 @@ class OrderController {
 
         if (isBefore(dateWithAdd, new Date())) {
             return res.status(401).json({
-                error: 'You can only cancel orders 15 minutes in advance',
+                error:
+                    'Você só pode cancelar pedidos 15 minutos após a realização do mesmo',
             });
         }
         const { id, total, status } = await order.update({

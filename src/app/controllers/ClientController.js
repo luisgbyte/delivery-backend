@@ -18,7 +18,7 @@ class ClientController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const userExists = await Client.findOne({
@@ -26,7 +26,7 @@ class ClientController {
         });
 
         if (userExists) {
-            return res.status(400).json({ error: 'User already exists.' });
+            return res.status(400).json({ error: 'Usuário já existe' });
         }
 
         const { id, name, email } = await Client.create(req.body);
@@ -54,7 +54,7 @@ class ClientController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { email, oldPassword } = req.body;
@@ -67,7 +67,7 @@ class ClientController {
             });
 
             if (userExists) {
-                return res.status(400).json({ error: 'User already exists.' });
+                return res.status(400).json({ error: 'Usuário já existe' });
             }
         }
 

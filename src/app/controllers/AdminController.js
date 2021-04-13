@@ -10,7 +10,7 @@ class AdminController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const userExists = await Admin.findOne({
@@ -18,7 +18,7 @@ class AdminController {
         });
 
         if (userExists) {
-            return res.status(400).json({ error: 'User already exists.' });
+            return res.status(400).json({ error: 'Usuário já existe' });
         }
 
         const { id, name, email } = await Admin.create(req.body);
@@ -46,7 +46,7 @@ class AdminController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const { email, oldPassword } = req.body;
@@ -59,7 +59,7 @@ class AdminController {
             });
 
             if (userExists) {
-                return res.status(400).json({ error: 'User already exists.' });
+                return res.status(400).json({ error: 'Usuário já existe' });
             }
         }
 

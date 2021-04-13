@@ -28,7 +28,7 @@ class AddressController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const userAddressExists = await Address.findOne({
@@ -36,9 +36,7 @@ class AddressController {
         });
 
         if (userAddressExists) {
-            return res
-                .status(401)
-                .json({ error: 'Customer already has address' });
+            return res.status(401).json({ error: 'O cliente já tem endereço' });
         }
 
         // defining 'client_id' with 'user_id' of the user session
@@ -66,7 +64,7 @@ class AddressController {
         });
 
         if (!(await schema.isValid(req.body))) {
-            return res.status(400).json({ error: 'Validation fails' });
+            return res.status(400).json({ error: 'A validação falhou' });
         }
 
         const address = await Address.findOne({

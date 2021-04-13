@@ -6,7 +6,7 @@ class ProductStockController {
         const product = await Product.findByPk(req.params.id);
 
         if (!product) {
-            return res.status(401).json({ error: 'Product does not exist' });
+            return res.status(401).json({ error: 'Produto não existe' });
         }
 
         const stocked = !product.stocked;
