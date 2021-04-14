@@ -21,13 +21,17 @@ class OrderStatusController {
 
         const { status } = req.body;
 
-        // no cancellation action on orders delivered or already canceled
-        if (
-            status === 'Cancelado' &&
-            (order.status === 'Entregue' || order.status === 'Cancelado')
-        ) {
+        // checking if the order is canceled
+        if (order.status === 'Cancelado') {
             return res.status(401).json({
-                error: `O pedido não pode ser cancelado porque seu status já é 'cancelado' ou 'entregue'`,
+                error: `A ação não pode ser realizada porque o pedido já foi cancelado!`,
+            });
+        }
+
+        // checking if the order is delivered
+        if (order.status === 'Entregue') {
+            return res.status(401).json({
+                error: `A ação não pode ser realizada porque o pedido foi entregue!`,
             });
         }
 

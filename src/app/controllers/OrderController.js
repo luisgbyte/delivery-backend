@@ -185,10 +185,17 @@ class OrderController {
                 .json({ error: 'You are not allowed to perform this action' });
         }
 
-        // checking if the order is canceled or delivered
-        if (order.status === 'Cancelado' || order.status === 'Entregue') {
+        // checking if the order is canceled
+        if (order.status === 'Cancelado') {
             return res.status(401).json({
-                error: `O pedido não pode ser cancelado porque seu status foi 'cancelado' ou 'entregue'`,
+                error: `A ação não pode ser realizada porque o pedido já foi cancelado!`,
+            });
+        }
+
+        // checking if the order is delivered
+        if (order.status === 'Entregue') {
+            return res.status(401).json({
+                error: `A ação não pode ser realizada porque o pedido foi entregue!`,
             });
         }
 
