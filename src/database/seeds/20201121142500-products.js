@@ -4,7 +4,7 @@ module.exports = {
             'products',
             [
                 {
-                    name: 'Hamburguer de siri',
+                    name: 'Hamburguer',
                     price: 15.5,
                     description: 'médio',
                     stocked: true,
@@ -14,8 +14,8 @@ module.exports = {
                     updated_at: new Date(),
                 },
                 {
-                    name: 'Sanduíche de carne',
-                    price: 10.9,
+                    name: 'Pizza',
+                    price: 10,
                     description: 'pequeno',
                     stocked: true,
                     // file_id: ,

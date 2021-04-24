@@ -4,7 +4,7 @@ import Client from '../models/Client';
 class ClientController {
     async index(req, res) {
         const clients = await Client.findAll({
-            attributes: ['id', 'name', 'email', 'cpf'],
+            attributes: ['id', 'name', 'email'],
         });
 
         return res.json(clients);

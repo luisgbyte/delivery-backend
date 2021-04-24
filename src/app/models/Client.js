@@ -9,7 +9,6 @@ class Client extends Model {
                 email: Sequelize.STRING,
                 password: Sequelize.VIRTUAL,
                 password_hash: Sequelize.STRING,
-                cpf: Sequelize.STRING,
             },
             {
                 sequelize,
