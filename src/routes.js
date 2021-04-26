@@ -22,7 +22,7 @@ import userMiddleware from './app/middlewares/user';
 const routes = new Router();
 const upload = multer(multerconfig);
 
-routes.get('/', (req, res) => res.send('ok'));
+routes.get('/', (req, res) => res.send('ok i am alive'));
 
 routes.post('/clients', ClientController.store);
 routes.post('/sessions', SessionController.store);
