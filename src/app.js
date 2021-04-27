@@ -25,7 +25,9 @@ class App {
             })
         );
 
-        this.server.use(cors());
+        this.server.use(
+            cors({ origin: 'https://delivery-web-sg72e.ondigitalocean.app' })
+        );
         this.server.use(express.json());
         this.server.use(
             '/files',
